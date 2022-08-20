@@ -1,4 +1,4 @@
-# UniFi Network Application
+# UniFi Controller
 Ubiquiti UniFi Network Application (commonly known as UniFi Controller) from official package source with both 32 and 64-bit support (ARMv7 still supported).
 
 [![Docker pulls](https://img.shields.io/docker/pulls/rundqvist/unifi-controller.svg)](https://hub.docker.com/r/rundqvist/unifi-controller)
@@ -40,7 +40,7 @@ docker run \
 version: "3"
 services:
   unifi:
-    image: rundqvist/unifi-controller:7.2.92
+    image: rundqvist/unifi-controller
     container_name: unifi
     network_mode: bridge
     volumes:
