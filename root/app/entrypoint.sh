@@ -1,12 +1,6 @@
 #!/bin/bash
 
-# Make sure folders exists
-#
-mkdir -p /var/log/{supervisord,unifi}
-mkdir -p /run/supervisord
+mkdir -p /config/{lib,log,run}
 
-chmod +x /app/certbot/certbot.sh
-
-# Start supervisord
-#
-exec supervisord -c /app/supervisor/01-supervisord.conf
+#sleep 12345
+/usr/bin/supervisord -c /app/supervisor/01-supervisord.conf

@@ -24,7 +24,12 @@ RUN apt install -y openjdk-8-jre-headless mongodb-server unifi=${UNIFI_VERSION}
 
 RUN apt -y remove wget && apt -y autoremove && apt -y autoclean
 
+VOLUME /config
+
 COPY root /
-RUN chmod +x /app/entrypoint.sh
+RUN apt install nano
+RUN chmod +x /app/setup.sh && /app/setup.sh
+USER unifi
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/app/supervisor/01-supervisord.conf" ]
