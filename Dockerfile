@@ -28,7 +28,6 @@ VOLUME /config
 COPY root /
 RUN chmod +x /app/setup.sh && /app/setup.sh
 
-USER unifi
 WORKDIR /home/unifi
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
