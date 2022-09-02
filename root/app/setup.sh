@@ -1,17 +1,32 @@
 #!/bin/bash
 
-# Start supervisord
+# Create necessary folders
 #
-#exec supervisord -c /app/supervisor/01-supervisord.conf
+mkdir -p \
+    /config \
+    /home/unifi \
+    /run/supervisord \
+    /var/log/{supervisord,unifi}
 
-mkdir -p /var/log/supervisord
-mkdir -p /var/log/unifi
-mkdir -p /run/supervisord
-mkdir -p /config 
-chmod +x /app/entrypoint.sh /app/certbot/certbot.sh
-chown -R unifi:unifi /config /app/certbot/certbot.sh /var/log/supervisord /run/supervisord /etc/ssl/certs
+# Set permissions
+#
+chmod +x \
+    /app/entrypoint.sh \
+    /app/certbot/certbot.sh
 
-F=(lib log run)
+chown -R unifi:unifi \
+    /app/certbot/certbot.sh \
+    /config \
+    /etc/ssl/certs \
+    /home/unifi \
+    /run/supervisord \
+    /var/log/supervisord
+
+# Link folders for easier mount
+#
+ln -s /var/log/unifi /home/unifi/logs
+
+F=(lib run)
 for f in "${F[@]}"
 do
     if [ -L /var/$f/unifi ]
@@ -22,7 +37,3 @@ do
     rm -rf /var/$f/unifi
     ln -s /config/$f /var/$f/unifi
 done
-#mkdir -p /config/{data,logs,run}
-#ln -s /config/data /var/lib/unifi
-#ln -s /config/logs /var/log/unifi
-#ln -s /config/run /var/run/unifi

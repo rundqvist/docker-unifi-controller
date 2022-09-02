@@ -7,8 +7,6 @@ ARG MONGODB_VERSION="3.4"
 
 LABEL maintainer="mattias.rundqvist@icloud.com"
 
-WORKDIR /app
-
 RUN apt update && apt -y full-upgrade
 
 RUN apt -y install ca-certificates apt-transport-https wget gnupg supervisor
@@ -29,7 +27,8 @@ VOLUME /config
 COPY root /
 RUN apt install nano
 RUN chmod +x /app/setup.sh && /app/setup.sh
+
 USER unifi
+WORKDIR /home/unifi
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
-#ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/app/supervisor/01-supervisord.conf" ]
