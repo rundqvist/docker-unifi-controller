@@ -8,4 +8,4 @@ mkdir -p /var/log/unifi
 
 # Start supervisor
 #
-/usr/bin/supervisord -c /app/supervisor/01-supervisord.conf
+/usr/bin/supervisord -c /app/unifi/supervisord.conf
