@@ -27,9 +27,8 @@ docker run \
     -p 8843:8843 \
     -p 8880:8880 \
     -p 1900:1900/udp \
-    -v /local/path/to/data:/usr/lib/unifi/data \
-    -v /local/path/to/logs:/usr/lib/unifi/logs \
-    -v /local/path/to/run:/usr/lib/unifi/run \
+    -v /local/path/to/config:/config \
+    -v /local/path/to/log:/var/log \
     -v /etc/localtime:/etc/localtime:ro \
     --name unifi \
     rundqvist/unifi-controller
@@ -44,9 +43,8 @@ services:
     container_name: unifi
     network_mode: bridge
     volumes:
-      - /local/path/to/data:/usr/lib/unifi/data
-      - /local/path/to/logs:/usr/lib/unifi/logs
-      - /local/path/to/run:/usr/lib/unifi/run
+      - /local/path/to/config:/config
+      - /local/path/to/log:/var/log
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 3478:3478/udp

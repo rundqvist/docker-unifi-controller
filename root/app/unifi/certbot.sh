@@ -13,4 +13,4 @@ fi
 
 # Sleep 24h before next update
 #
-sleep 86400
+exec sleep 86400

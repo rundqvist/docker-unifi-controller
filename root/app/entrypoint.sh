@@ -1,12 +1,37 @@
 #!/bin/bash
 
-# Make sure folders exists
+# Create necessary folders
 #
-mkdir -p /var/log/{supervisord,unifi}
-mkdir -p /run/supervisord
+mkdir -p \
+    /config/{lib,run} \
+    /home/unifi \
+    /run/supervisord \
+    /var/log/{supervisord,unifi}
 
-chmod +x /app/certbot/certbot.sh
+chown -R unifi:unifi \
+    /app/unifi/certbot.sh \
+    /config/{lib,run} \
+    /etc/ssl/certs \
+    /home/unifi \
+    /run/supervisord \
+    /var/log/{supervisord,unifi}
 
-# Start supervisord
+# Link folders for easier mount
 #
-exec supervisord -c /app/supervisor/01-supervisord.conf
+ln -s /var/log/unifi /home/unifi/logs
+
+F=(lib run)
+for f in "${F[@]}"
+do
+    if [ -L /var/$f/unifi ]
+    then
+        unlink /var/$f/unifi
+    fi
+
+    rm -rf /var/$f/unifi
+    ln -s /config/$f /var/$f/unifi
+done
+
+# Start supervisor
+#
+exec /usr/bin/supervisord -c /app/unifi/supervisord.conf
