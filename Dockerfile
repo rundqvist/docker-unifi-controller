@@ -5,8 +5,6 @@ ARG DIST
 ARG UNIFI_VERSION="7.2.92-18687-1"
 ARG MONGODB_VERSION="3.4"
 
-LABEL maintainer="mattias.rundqvist@icloud.com"
-
 RUN apt-get update && \
     apt-get -y full-upgrade && \
     apt-get -y install ca-certificates apt-transport-https wget gnupg supervisor
@@ -26,8 +24,18 @@ RUN apt-get update && \
 VOLUME /config
 
 COPY root /
-RUN chmod +x /app/setup.sh && /app/setup.sh
+RUN chmod +x /app/entrypoint.sh /app/unifi/certbot.sh
 
 WORKDIR /home/unifi
+
+EXPOSE  1900/udp \
+        3478/udp \
+        5514/udp \
+        6789 \
+        8080/tcp \
+        8443/tcp \
+        8843 \
+        8880 \
+        10001/udp
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]
