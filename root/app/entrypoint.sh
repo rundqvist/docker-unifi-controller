@@ -9,7 +9,6 @@ mkdir -p \
     /var/log/{supervisord,unifi}
 
 chown -R unifi:unifi \
-    /app/unifi/certbot.sh \
     /config/{lib,run} \
     /etc/ssl/certs \
     /home/unifi \
@@ -31,6 +30,17 @@ do
     rm -rf /var/$f/unifi
     ln -s /config/$f /var/$f/unifi
 done
+
+# Update certificates
+#
+/usr/sbin/update-ca-certificates -f > /dev/null 2>&1
+
+if [ $? -eq 0 ]
+then
+    echo "$(date) [INF] Certificates updated."
+else
+    echo "$(date) [ERR] Failed to update certificates."
+fi
 
 # Start supervisor
 #

@@ -2,7 +2,7 @@ ARG DIST="xenial"
 FROM ubuntu:${DIST}
 
 ARG DIST
-ARG UNIFI_VERSION="7.2.92-18687-1"
+ARG UNIFI_VERSION="7.2.94-18697-1"
 ARG MONGODB_VERSION="3.4"
 
 RUN apt-get update && \
@@ -24,7 +24,7 @@ RUN apt-get update && \
 VOLUME /config
 
 COPY root /
-RUN chmod +x /app/entrypoint.sh /app/unifi/certbot.sh
+RUN chmod +x /app/entrypoint.sh
 
 WORKDIR /home/unifi
 
